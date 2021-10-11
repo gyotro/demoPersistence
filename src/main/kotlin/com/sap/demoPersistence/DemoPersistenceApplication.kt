@@ -29,6 +29,7 @@ class DemoPersistenceApplication {
 	}
 }
 
+// Starting Application
 fun main(args: Array<String>) {
 	runApplication<DemoPersistenceApplication>(*args)
 	DemoPersistenceApplication.Logger.info("Spring Boot Application Started!")
