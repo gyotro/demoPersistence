@@ -38,9 +38,12 @@ class RestController {
                 "tokenUri" to tokenUri,
                 "authorizationGrantType" to authorizationGrantType,
                 "deviceConnectivityUrlUnproxed" to deviceConnectivityUrlUnproxed,
-                "Bindigns" to bindings
+                "Bindings" to bindings
             )
         }
     }
+
+    @GetMapping("/getAllEnv", produces = ["application/json"])
+    fun getAllEnv(): MutableMap<String, String> = config.allEnvs
 
 }

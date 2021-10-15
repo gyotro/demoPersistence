@@ -36,8 +36,7 @@ class Configuration {
     @Value("\${sapiot.deviceConnectivityUrl}")
     lateinit var deviceConnectivityUrl: String
 
-    var deviceConnectivityUrlUnproxed: String? = null
-        set(value) { System.getenv("DEVICE_CONNECTIVITY") }
+    var deviceConnectivityUrlUnproxed: String = System.getenv("DEVICE_CONNECTIVITY")
 
     @Value("\${sapiot.gatewayApi}")
     lateinit var gatewayApi: String
@@ -59,7 +58,8 @@ class Configuration {
 
     lateinit var certDir: String
 
-    var bindings: String? = null
-        set(value) {System.getenv("SERVICE_BINDINGS")}
+    var bindings: String = System.getenv("SERVICE_BINDINGS")
+
+    val allEnvs = System.getenv()
 
 }
