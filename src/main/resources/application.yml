@@ -1,5 +1,21 @@
 server:
   port: 8080
-springdoc:
-  api-docs:
-    path: /test-custom
+#springdoc:
+#  api-docs:
+#    path: /test-custom
+sapiot:
+  edgePort: 8900
+  authorizationGrantType: client_credentials
+  ingestionUrl: https://xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.eu10.cp.iot.sap
+  deviceConnectivityUrl: https://iot-device-connectivity-noah-live.cfapps.eu10.hana.ondemand.com
+  gatewayApi: /iot/edge/api/v1/gateways
+  deviceApi: /iot/edge/api/v1/devices
+  deviceApiCloud: /api/v1/devices
+  certificateApi: /TBD/authentications/clientCertificate/p12
+  sensorAlternateId: SAMSensor
+  sensorTypeAlternateId: 986
+tenant:
+  clientId: xx-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx!xxxxxx|iotae_service!b5
+  clientSecret: CLIENT_SECRET:xxxxxxxxxxxxxxxxxxxxxxxxxxx
+  tokenUri: OAUTH2_AUTH:https://xxxxxxxxxxxxx.authentication.eu10.hana.ondemand.com/oauth/token
+
