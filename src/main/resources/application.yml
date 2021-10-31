@@ -4,7 +4,7 @@ server:
 #  api-docs:
 #    path: /test-custom
 sapiot:
-  edgePort: 8900
+  edgePort: 8911
   authorizationGrantType: client_credentials
   ingestionUrl: https://xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx.eu10.cp.iot.sap
   deviceConnectivityUrl: https://iot-device-connectivity-noah-live.cfapps.eu10.hana.ondemand.com

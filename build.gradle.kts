@@ -14,16 +14,19 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
 	mavenCentral()
+	maven("https://jitpack.io")
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-actuator")
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+	implementation("org.springframework.boot:spring-boot-starter-actuator:2.5.5")
+	implementation("org.springframework.boot:spring-boot-starter-web:2.5.5")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	// required library for Swagger
-	implementation("org.springdoc:springdoc-openapi-ui:1.5.2")
+	implementation("org.springdoc:springdoc-openapi-ui:1.5.11")
+	// required for Koxon
+	implementation("com.beust:klaxon:5.5")
 
 	// to be enabled only with Postgresql up and running
 	//runtimeOnly("org.postgresql:postgresql")

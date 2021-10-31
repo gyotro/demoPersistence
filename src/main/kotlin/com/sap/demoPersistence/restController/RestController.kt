@@ -1,22 +1,26 @@
-package com.sap.demoPersistence.RestController
+package com.sap.demoPersistence.restController
 
-import com.sap.demoPersistence.utils.Configuration
-import org.apache.tomcat.util.http.parser.MediaType
+import com.sap.demoPersistence.http.RestClientEdge
+import com.sap.demoPersistence.http.RestClientHelper
+import com.sap.demoPersistence.utils.ConfigInitializer
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.http.ResponseEntity
-import org.springframework.util.MimeTypeUtils.APPLICATION_JSON
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.RestController
-import java.util.*
 
 @RestController
 @RequestMapping("/persistence")
 class RestController {
 
     @Autowired
-    lateinit var config: Configuration
+    lateinit var config: ConfigInitializer
+
+    @Autowired
+    lateinit var restClient: RestClientHelper
+
+    @Autowired
+    lateinit var restClientEdge: RestClientEdge
 
     @GetMapping("/checkContainer")
     fun testContainers() : String
@@ -45,5 +49,18 @@ class RestController {
 
     @GetMapping("/getAllEnv", produces = ["application/json"])
     fun getAllEnv(): MutableMap<String, String> = config.allEnvs
+
+    @PostMapping("/measures/{deviceAlternateId}")
+    fun measures(@RequestBody body: String, @PathVariable(required = true) deviceAlternateId : String): ResponseEntity<String>
+    {
+
+        val edgeUrl = restClientEdge.getEdgeFromBindings()
+        val finalUrl = "$edgeUrl/measures/$deviceAlternateId"
+
+        return restClient.invokePost(body, finalUrl)
+    }
+    companion object {
+        var Logger = LoggerFactory.getLogger(RestController::class.java)
+    }
 
 }

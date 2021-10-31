@@ -1,6 +1,8 @@
 package com.sap.demoPersistence.utils
 
+import com.beust.klaxon.Parser
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
@@ -9,13 +11,13 @@ import org.springframework.context.annotation.PropertySource
 @org.springframework.context.annotation.Configuration
 @PropertySource("classpath:application.yml")
 @EnableAutoConfiguration
-class Configuration {
+class ConfigInitializer {
 
     @Autowired
     lateinit var mapper: ObjectMapper
 
     @Value("\${sapiot.edgePort}")
-    var edgePort: Int? = null
+    lateinit var edgePort: String
 
     //@Value("\${sapiot.ingestionUrl}") --> non si leggono dal yml ma dall'Environment del deploy di K8S
     var ingestionUrl: String? = null
@@ -61,5 +63,24 @@ class Configuration {
     var bindings: String = System.getenv("SERVICE_BINDINGS")
 
     val allEnvs = System.getenv()
+
+    fun getFromBindings(filterParamType : String, filterParamId : String): String?
+    {
+        val parser: Parser = Parser.default()
+        val json: MutableMap<*, *> = parser.parse( this.bindings ) as MutableMap<*, *>
+        val param: List<Map<String, String>> = json["bindings"] as List<Map<String, String>>
+
+        Logger.info("Lista dei Bindings: $param")
+
+        val urlRest = param.filter { map -> map["type"].equals(filterParamType) && map["id"].equals(filterParamId) }
+            .map { map -> map["url"] }[0]
+
+        Logger.info("REST API URL: $urlRest")
+
+        return urlRest
+    }
+    companion object {
+        var Logger = LoggerFactory.getLogger(ConfigInitializer::class.java)
+    }
 
 }
